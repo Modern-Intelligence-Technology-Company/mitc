@@ -62,7 +62,8 @@ Bloomington is **transitioning** its prior ALPR vendor relationship while emphas
 
 ## Slide 6 — Architecture (one picture in words)
 
-**Cameras (ONVIF/RTSP)** → **encrypted backhaul** → **Bloomington GPU hosts** → **encrypted storage** → **RBAC portal**  
+**Cameras (ONVIF/RTSP, intentionally thin at the pole)** → **encrypted backhaul** → **Bloomington GPU hosts** → **encrypted storage** → **RBAC portal**  
+*Field imagers avoid authoritative on-camera ALPR so **loss or theft of a camera does not equal loss of investigative logic or read history**.*  
 Sidecars: metrics (**Prometheus/Grafana**), immutable **auditd**, **retentiond**
 
 ---

@@ -26,7 +26,7 @@ This document should be read with the companion **Hardware and Software Specific
 
 ### 1.1 Transition context
 
-The City’s prior **Flock** arrangement concluded **2026-03-05** without renewal; leadership described immediate transition measures **limiting access to Bloomington Police Department personnel**, **ending outside data sharing**, and removing Bloomington cameras from **national network visibility** during evaluation.
+The City’s prior **Flock Safety** arrangement concluded **2026-03-05** without renewal; that product category—**vendor-operated ALPR with national network participation**—is MITC’s **competitive reference** for what Bloomington is **exiting**. Leadership described immediate transition measures **limiting access to Bloomington Police Department personnel**, **ending outside data sharing**, and removing Bloomington cameras from **national network visibility** during evaluation.
 
 ### 1.2 Physical footprint described publicly
 
@@ -56,6 +56,8 @@ The City emphasized **narrow parameters**, **strong accountability**, and **clea
 ### 2.3 Security and resilience
 
 We implement **defense-in-depth**: network segmentation, **TLS**, **disk encryption**, **role-separated access**, **append-only auditing**, and **monitoring** with **Prometheus/Grafana**. Incident response runbooks include **evidence preservation** steps for legal holds.
+
+**Field hardware posture.** Pole and trailer **cameras are kept technically “thin”**: **ONVIF/RTSP** video to **Bloomington** for decode and ALPR, **minimal** ancillary boxes, and **no reliance** on **mast-mounted edge inference** or **on-camera read storage**—so **theft or physical destruction** of a sensor does not imply **theft of an ALPR database or model custody**. Manufacturer integration examples (Axis, Hanwha, Bosch, Uniview) with **catalog links** appear in the **Hardware and Software Specification**.
 
 ---
 

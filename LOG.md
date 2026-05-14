@@ -11,3 +11,4 @@
 - Added `MEMORY.md` (AGENTS.md documentation layers) after merge; **push** still pending remote configuration.
 - Added `LESSONS.md` for durable bid-package lessons learned.
 - Aligned all repository nomenclature to **Modern Intelligence Technology Company (MITC)** per `thesis.md`; committed and pushed to `origin`.
+- Documented **Flock Safety** as competitive reference; **thin-pole / stream-only** camera posture vs. **on-camera ALPR** (theft resilience); added **manufacturer COTS links** (Axis Q1805-LE, Hanwha PNO-A9081R, Bosch NBE-5503-AL, Uniview IPC2B25SS-ADZK-I1) in `docs/alpr-technical-specification.md`; extended `verify-deliverables.sh` to require those URL patterns; updated proposal, business plan, pitch deck, cover letter; refreshed `MEMORY.md`.

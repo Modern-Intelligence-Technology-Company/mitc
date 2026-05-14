@@ -24,13 +24,15 @@ We are anchoring near-term revenue on a **City of Bloomington ALPR ecosystem rep
 2. **Openness:** Prefer **open-source software** and **documented protocols**; disclose components and supply chain.  
 3. **Proportionality:** Scope retention, sharing, and analytics to policy—not to vendor defaults.  
 4. **Evidence hygiene:** Design for discovery, retention holds, and chain-of-custody workflows common to prosecutors and civil oversight.  
-5. **Field pragmatism:** Solutions must run on **COTS cameras**, **standard IP networks**, and **maintainable** Linux infrastructure.
+5. **Field pragmatism:** Solutions must run on **COTS cameras** (stream-only discipline at the pole; see technical spec for **manufacturer catalog links**), **standard IP networks**, and **maintainable** Linux infrastructure.
 
 ---
 
 ## 3. Market context — Bloomington
 
-**Situational facts (public record, April 2026).** The City’s prior license plate reader subscription arrangement ended **2026-03-05**; leadership publicly framed a transition period with tightened access and **no outside data sharing** while evaluating replacements. The installed base described includes **11 fixed ALPR cameras**, **4 fixed video cameras**, and **4 mobile trailer systems** capable of ALPR and video (and other modalities).
+**Situational facts (public record, April 2026).** The City’s prior license plate reader subscription arrangement with **Flock Safety** ended **2026-03-05**; leadership publicly framed a transition period with tightened access and **no outside data sharing** while evaluating replacements. The installed base described includes **11 fixed ALPR cameras**, **4 fixed video cameras**, and **4 mobile trailer systems** capable of ALPR and video (and other modalities).
+
+**Competitive reference.** **Flock** exemplifies the **integrated national SaaS + proprietary camera** pattern MITC replaces with **local servers**, **COTS ONVIF imagers** (specific manufacturer links in the technical volume), and **auditable open-source** middleware.
 
 **Buyer needs implied by public messaging.**
 

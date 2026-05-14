@@ -73,6 +73,14 @@ if [[ -f "docs/alpr-technical-specification.md" ]]; then
   fi
 fi
 
+# Technical spec must carry manufacturer reference URLs for COTS camera integration.
+if [[ -f "docs/alpr-technical-specification.md" ]]; then
+  if ! grep -qE 'axis\.com|hanwhavision\.com|boschsecurity\.com|uniview\.com' docs/alpr-technical-specification.md; then
+    echo "FAIL: alpr-technical-specification.md must link to COTS camera manufacturer pages" >&2
+    failures=$((failures + 1))
+  fi
+fi
+
 if [[ "$failures" -gt 0 ]]; then
   echo "verify-deliverables: ${failures} check(s) failed" >&2
   exit 1

@@ -19,9 +19,11 @@ This specification defines a **reference architecture** MITC proposes for replac
 
 ### 2.1 Logical tiers
 
-1. **Field tier — edge sensors**  
-   - IP cameras (plate-optimized or general surveillance) using standard **RTSP**/**ONVIF** control plane.  
-   - Optional **edge compute** (small Linux appliance) for buffering, TLS, or **edge inference** when backhaul is constrained.
+1. **Field tier — minimal-footprint imagers**  
+   - **IP cameras** (plate-optimized or general surveillance) that function primarily as **imagers and encoders**, exposing standard **RTSP** and **ONVIF** control. **PoE** and **IP66+** outdoor ratings reduce separate power plant complexity at the pole.  
+   - **Footprint discipline:** **Dedicated camera installations are minimized** in **electrical parts count**, **ancillary enclosures**, and **maintenance surfaces**. Each extra field computer or nested subsystem adds **failure modes** and **truck rolls**.  
+   - **Theft, vandalism, and destruction:** Cameras on public rights-of-way are **physical targets**. MITC therefore **does not treat on-camera ALPR, on-camera hotlist logic, or on-camera storage of reads** as the **authoritative** path. *Routine H.264/H.265 encoding on the camera is normal COTS behavior and is not equated here with “edge ALPR.”* If a camera is **removed or compromised**, residual risk must **not** extend to **City decryption keys, model artifacts, investigative hotlists, or indexed read history**. **Inference, matching, retention, audit, and export** occur on **in-city** servers under City **physical and logical** control.  
+   - **Optional buffering only:** Where backhaul is exceptionally constrained, an **in-cabinet** network appliance (not mounted on the camera mast) may queue **encrypted** egress to Bloomington. **On-camera edge inference** is **out of scope** for the default MITC design.
 
 2. **Transport tier — municipal network**  
    - **IPsec** or **MACsec** where available; minimally **TLS 1.3** overlays for management.  
@@ -42,7 +44,7 @@ This specification defines a **reference architecture** MITC proposes for replac
 
 ### 2.2 Custody boundaries
 
-All **primary storage and indexing of plate reads, thumbnails, and search audit logs** reside on **in-city** systems. Off-site backups, if used, are **optional**, **encrypted**, **client-controlled**, and **documentedd** in the system security plan—never a covert vendor repository.
+All **primary storage and indexing of plate reads, thumbnails, and search audit logs** reside on **in-city** systems. Off-site backups, if used, are **optional**, **encrypted**, **client-controlled**, and **documented** in the system security plan—never a covert vendor repository.
 
 ---
 
@@ -62,7 +64,18 @@ All **primary storage and indexing of plate reads, thumbnails, and search audit 
 | Streaming | **H.264**/**H.265** + **ONVIF Profile S/T** | Avoid proprietary transports for core path |
 | Power | PoE++ where available | Local power meter logging for uptime forensics |
 
-**Representative COTS families (non-exclusive):** Axis Communications (market-leading reliability), Hanwha Vision, Uniview, and other **NDAA-compliant** options as required by City policy.
+**Competitive reference.** Bloomington’s prior procurement direction included **Flock Safety**—a **vendor-operated**, **network-centric** ALPR offering that centralized operational value in the provider’s service. MITC’s architecture is the **deliberate inverse**: **City-operated** custody, **COTS imagers** speaking **open protocols**, and **software the City can audit**—without **mandatory** national correlation layers.
+
+**Illustrative COTS models (manufacturer pages — nonexclusive; final SKU per site survey, pilot, and procurement rules):**
+
+| Manufacturer | Example SKU | Manufacturer / catalog link |
+|--------------|-------------|-----------------------------|
+| Axis Communications | AXIS Q1805-LE (long-range 1080p IR bullet, 32× zoom) | [axis.com — AXIS Q1805-LE](https://www.axis.com/products/axis-q1805-le) |
+| Hanwha Vision | PNO-A9081R (4K IR bullet, ONVIF S/G/T) | [hanwhavision.com — PNO-A9081R](https://www.hanwhavision.com/en/products/camera/network/bullet/pno-a9081r/) |
+| Bosch Security and Safety Systems | DINION IP 5000i IR bullet NBE-5503-AL (5 MP varifocal) | [commerce.boschsecurity.com — NBE-5503-AL](https://commerce.boschsecurity.com/xl/en/Bullet-5MP-HDR-2-7-12mm-auto-IP67-IK10/p/F.01U.328.213/) |
+| Uniview | IPC2B25SS-ADZK-I1 (5 MP LightHunter VF bullet) | [global.uniview.com — IPC2B25SS-ADZK-I1](https://global.uniview.com/Products/Network_Cameras/Prime_Series/PRIMEII_Series/IPC2B25SS-ADZK-I1/) |
+
+MITC **ingests RTSP/H.264 or H.265 streams** from any of the above (and equivalent ONVIF peers). Cameras that ship with **optional** on-device analytics (e.g., plate apps, edge VMD) are configured so that **evidentiary ALPR** is **not** dependent on those features unless the City explicitly chooses otherwise. **Axis** publishes a companion [AXIS License Plate Verifier](https://www.axis.com/products/axis-license-plate-verifier) offering; MITC’s default is still **central decoding** on **Bloomington** hosts so **stolen cameras do not become stolen ALPR engines**. For federal or State-funded segments, **NDAA-compliant** lines (often Axis, Hanwha, Bosch families) supersede commodity listings where law requires.
 
 **Plate-optimized cameras** (multi-exposure HDR burst) may replace baseline at hot sites; still must expose **RTSP** and **ONVIF** for interoperability.
 
@@ -71,7 +84,7 @@ All **primary storage and indexing of plate reads, thumbnails, and search audit 
 | Subsystem | Specification |
 |-----------|----------------|
 | Mast / camera mount | Stable in wind per INDOT-adjacent practice; vibration damping |
-| Compute | Ruggedized **Linux** NUC or 1U short-depth server; optional **GPU** |
+| Trailer compute | Ruggedized **Linux** NUC or short-depth 1U in **tamper-evident cabinet** (not mast-mounted); optional **GPU** — mast cameras remain **stream-only** peers |
 | Storage | **Encrypted NVMe**; tamper-evident enclosure |
 | Backhaul | **LTE/5G** modem with **dual-SIM**; **IPsec** tunnel to **in-city** platform |
 | Power | Shore power + **battery/solar** options per trailer |
