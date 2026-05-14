@@ -106,7 +106,7 @@ End-to-end **program delivery** for municipally owned ALPR:
 - **Equipment pass-through** with documented markup cap or administrative fee (per solicitation rules).  
 - **Annual operations subscription** tied to patch/backup/monitoring and a pooled on-call block.
 
-**Illustrative structure (placeholder until RFP pricing grids are released):**
+**Illustrative structure (placeholder until RFP pricing grids are released):** scenario tables with **reconciled channel counts** appear in [`budget-citywide-install.md`](budget-citywide-install.md) (generated from [`mvp/budget/calculator.py`](../mvp/budget/calculator.py)).
 
 | Phase | Description | Indicative range |
 |-------|-------------|-------------------|

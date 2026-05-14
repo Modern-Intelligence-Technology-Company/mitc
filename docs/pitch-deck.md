@@ -73,7 +73,8 @@ Sidecars: metrics (**Prometheus/Grafana**), immutable **auditd**, **retentiond**
 - **Linux**, **Docker** / **Kubernetes** packaging  
 - **Prometheus**, **Grafana**, **Traefik/nginx** patterns  
 - **PostgreSQL**, **MinIO**  
-- **ALPR** pipelines using **auditable OSS** models / ONNX runtimes
+- **ALPR** pipelines using **auditable OSS** models / ONNX runtimes  
+- **Lab MVP** (`mvp/`) — **MediaMTX** + synthetic **H.264/RTSP**; swap stream URL for **[AXIS Q1805-LE](https://www.axis.com/products/axis-q1805-le)** in production  
 
 *Exact model set finalized during pilot benchmarks and license review.*
 

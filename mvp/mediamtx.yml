@@ -1,0 +1,6 @@
+paths:
+  simulated_axis:
+    source: publisher
+
+# Lab simulation path — FFmpeg publishes here; production ingests the same way from
+# rtsp://<axis-host>/axis-media/media.amp?streamprofile=… or vendor RTSP URL.

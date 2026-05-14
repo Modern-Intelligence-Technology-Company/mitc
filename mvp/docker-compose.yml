@@ -1,0 +1,28 @@
+services:
+  # RTSP broker — same client code paths as production FFmpeg/GStreamer ingest.
+  mediamtx:
+    image: bluenviron/mediamtx:1.9.3
+    container_name: mitc_mediamtx
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml:ro
+    ports:
+      - "8554:8554"
+
+  # Synthetic H.264 — mimics a constant RTSP source (AXIS would replace this URL).
+  streamgen:
+    build:
+      context: ./docker/ffmpeg-runner
+      dockerfile: Dockerfile
+    image: mitc/ffmpeg-runner:local
+    container_name: mitc_streamgen
+    depends_on:
+      - mediamtx
+    command: ["/streamgen.sh"]
+
+  # One-shot probe — proves the stream is decodable the same way ops validates an Axis feed.
+  ingest-smoke:
+    image: mitc/ffmpeg-runner:local
+    container_name: mitc_ingest_smoke
+    depends_on:
+      - streamgen
+    command: ["/smoke.sh"]

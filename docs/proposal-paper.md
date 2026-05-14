@@ -19,7 +19,7 @@ MITC’s response is simple in principle and rigorous in execution:
 4. **Operational honesty** — we propose a **pilot**, published acceptance tests, and council-ready transparency artifacts rather than unsubstantiated marketing claims.  
 5. **Fiscal realism on camera counts** — we size **central compute and storage** for a **[DeFlock](https://maps.deflock.org/?lat=39.1670&lng=-86.5343&zoom=11.00)-class ~40-channel stress** until the **City’s** authoritative **site register** closes, using **unit-rate** worksheets so totals **flex** with verified scope.
 
-This document should be read with the companion **Hardware and Software Specification**, **Lean Business Plan**, and pricing schedules **to be finalized** when official IFB/RFP documents and insurance/bonding grids are issued.
+This document should be read with the companion **Hardware and Software Specification**, **Lean Business Plan**, **[Citywide budget scenarios](budget-citywide-install.md)**, and pricing schedules **to be finalized** when official IFB/RFP documents and insurance/bonding grids are issued.
 
 ---
 

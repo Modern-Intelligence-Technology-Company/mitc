@@ -83,6 +83,8 @@ MITC **ingests RTSP/H.264 or H.265 streams** from any of the above (and equivale
 
 **Plate-optimized cameras** (multi-exposure HDR burst) may replace baseline at hot sites; still must expose **RTSP** and **ONVIF** for interoperability.
 
+**MVP reference SKU — “easiest” software positioning (MITC default).** Among commodity lines, **Axis**—specifically **[AXIS Q1805-LE](https://www.axis.com/products/axis-q1805-le)** for lab work—provides the **smoothest integration path** for an open-stack team: **RTSP** and **ONVIF Profiles S/T** are first-class, **VAPIX** HTTP APIs are documented for provisioning extras, and the vendor’s **operator-facing** stream-URL patterns are **stable** enough to script in CI. Competent alternatives (Hanwha, Bosch, others) remain fully supportable; Axis minimizes **time-to-first-frame** when engineers are scarce. The repository **`mvp/`** stack publishes a **synthetic RTSP** path (`simulated_axis`) so **ingest, decode, and orchestration** mature **before** poles are rewired; production swaps the URL for the Axis RTSP endpoint (or another ONVIF peer).
+
 ### 3.2 Mobile trailer systems
 
 | Subsystem | Specification |
@@ -172,6 +174,18 @@ MITC will deploy a **modular ALPR service** behind an internal REST/gRPC API. Ca
 - **APIs**: OpenAPI-documented **REST**; **GeoJSON** optional for map overlays internal-only.  
 - **Exports**: CSV/JSON with SHA-256 hashes; original images packaged as **zip** with **chain-of-custody** manifest.  
 - **Standards alignment**: **ONVIF** camera control; **S3** API for object storage clients.
+
+### 4.7 Development, simulation, and open protocol anchors (lab without hardware)
+
+Municipal programs should not block software progress on **pole access**. The **wire contracts** that matter for ingest are **public specifications**, not proprietary camera firmware:
+
+- **RTSP** — [RFC 2326](https://www.rfc-editor.org/rfc/rfc2326); **RTP** — [RFC 3550](https://www.rfc-editor.org/rfc/rfc3550). These define how **FFmpeg**, **GStreamer**, **Frigate**, and custom workers **pull** video.
+- **H.264 / H.265** — standard encoder bitstreams; any compliant decoder path applies equally to **synthetic** and **field** sources.
+- **ONVIF** — specifications freely downloadable from [onvif.org](https://www.onvif.org/) (device/service descriptions). ONVIF is **not** open-source firmware, but it **is** an open **API contract** for discovery, media profiles, and PTZ where applicable.
+
+**MITC lab MVP (`mvp/`):** a **Docker Compose** stack runs **MediaMTX** (RTSP broker) plus **FFmpeg** (`lavfi` test pattern) publishing **`simulated_axis`**, mimicking a steady **TCP RTSP** camera feed. The **`ingest-smoke`** service runs **`ffprobe`** to prove the stream is decodable—the same probe pattern operators use when commissioning an **AXIS Q1805-LE**. Final integration is **`rtsp://…` URL + credentials** substitution, not a stack rewrite.
+
+**Illustrative citywide CAPEX** scenarios (channel counts 19 / 30 / 40 / 50, low–mid–high) are modeled in **`mvp/budget/calculator.py`** with narrative in **`docs/budget-citywide-install.md`**.
 
 ---
 

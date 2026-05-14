@@ -22,6 +22,8 @@ declare -A MIN_BYTES=(
   ["docs/bid-cover-letter.md"]=1200
   ["docs/adr/0001-bloomington-alpr-bid-package.md"]=1500
   ["docs/adr/0001-bloomington-alpr-bid-package-aar.md"]=800
+  ["docs/adr/0002-mvp-simulated-ingest-and-budget-model.md"]=800
+  ["docs/budget-citywide-install.md"]=2500
   ["LOG.md"]=400
 )
 
@@ -34,6 +36,11 @@ REQUIRED_FILES=(
   "docs/bid-cover-letter.md"
   "docs/adr/0001-bloomington-alpr-bid-package.md"
   "docs/adr/0001-bloomington-alpr-bid-package-aar.md"
+  "docs/adr/0002-mvp-simulated-ingest-and-budget-model.md"
+  "docs/adr/0002-mvp-simulated-ingest-and-budget-model-aar.md"
+  "docs/budget-citywide-install.md"
+  "mvp/docker-compose.yml"
+  "mvp/README.md"
   "LOG.md"
 )
 
@@ -82,12 +89,38 @@ if [[ -f "docs/alpr-technical-specification.md" ]]; then
 fi
 
 # Fleet / budget package must reference the DeFlock Bloomington map anchor (third-party density check).
-for f in docs/proposal-paper.md docs/alpr-technical-specification.md docs/business-plan.md docs/pitch-deck.md docs/bid-cover-letter.md thesis.md; do
+for f in docs/proposal-paper.md docs/alpr-technical-specification.md docs/business-plan.md docs/pitch-deck.md docs/bid-cover-letter.md thesis.md docs/budget-citywide-install.md; do
   if [[ -f "$f" ]] && ! grep -q 'maps\.deflock\.org' "$f"; then
     echo "FAIL: $f must reference maps.deflock.org for ~40-camera planning context" >&2
     failures=$((failures + 1))
   fi
 done
+
+# Unit tests (MVP compose + budget calculator) — fast path when deps available.
+if [[ -d tests ]]; then
+  if [[ -x .venv/bin/python ]]; then
+    if ! (cd "$ROOT" && PYTHONPATH=. .venv/bin/python -m pytest -q); then
+      echo "FAIL: pytest (use: python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt)" >&2
+      failures=$((failures + 1))
+    fi
+  elif python3 -c "import pytest" 2>/dev/null; then
+    if ! (cd "$ROOT" && PYTHONPATH=. python3 -m pytest -q); then
+      echo "FAIL: pytest" >&2
+      failures=$((failures + 1))
+    fi
+  else
+    echo "FAIL: tests/ present but pytest unavailable (create .venv per README)" >&2
+    failures=$((failures + 1))
+  fi
+fi
+
+# Optional: validate compose syntax when Docker CLI exists.
+if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
+  if ! docker compose -f mvp/docker-compose.yml config -q; then
+    echo "FAIL: mvp/docker-compose.yml invalid per docker compose config" >&2
+    failures=$((failures + 1))
+  fi
+fi
 
 if [[ "$failures" -gt 0 ]]; then
   echo "verify-deliverables: ${failures} check(s) failed" >&2
