@@ -81,6 +81,14 @@ if [[ -f "docs/alpr-technical-specification.md" ]]; then
   fi
 fi
 
+# Fleet / budget package must reference the DeFlock Bloomington map anchor (third-party density check).
+for f in docs/proposal-paper.md docs/alpr-technical-specification.md docs/business-plan.md docs/pitch-deck.md docs/bid-cover-letter.md thesis.md; do
+  if [[ -f "$f" ]] && ! grep -q 'maps\.deflock\.org' "$f"; then
+    echo "FAIL: $f must reference maps.deflock.org for ~40-camera planning context" >&2
+    failures=$((failures + 1))
+  fi
+done
+
 if [[ "$failures" -gt 0 ]]; then
   echo "verify-deliverables: ${failures} check(s) failed" >&2
   exit 1

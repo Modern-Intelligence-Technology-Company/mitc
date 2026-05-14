@@ -6,6 +6,8 @@ The City of Bloomington, IN is soliciting bids for an automated license plate re
 
 Critically, in addition to the physical camera installations themselves, the data must be transferred, processed, and held locally, on a server located in-city.
 
+Community maps (e.g. [DeFlock — Bloomington area](https://maps.deflock.org/?lat=39.1670&lng=-86.5343&zoom=11.00)) suggest **on the order of ~40** prior **Flock** endpoints—**not** an official census—so **budget and capacity** should be reconciled against **City purchasing records** and field surveys during procurement.
+
 MITC intends to submit a bid for this contract; we intend to operate solely open-source software and protocols, and, to the greatest extent possible, open-source, or at least commodity/COTS, camera and network infrastructure hardware.
 
 Bootstrapping Instructions:

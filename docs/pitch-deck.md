@@ -32,9 +32,9 @@ Bloomington is **transitioning** its prior ALPR vendor relationship while emphas
 
 - Evaluate replacements that are **not tied** to unwanted national network models  
 - **Govern** access, retention, and sharing with **documented** safeguards  
-- Maintain capacity for **serious case** support described in public examples
+- Maintain capacity for **serious case** support described in public examples  
 
-**Fleet baseline (public):** 11 fixed ALPR, 4 fixed video, 4 mobile trailer systems (multi-modal).
+**Fleet / budget hint:** City news cites **11+4+4** “systems,” while community **[DeFlock](https://maps.deflock.org/?lat=39.1670&lng=-86.5343&zoom=11.00)** maps **~40** prior **Flock** markers — **scope & central budget scale** with the **verified channel count**, not the shortest headline.
 
 ---
 
@@ -109,10 +109,11 @@ Sidecars: metrics (**Prometheus/Grafana**), immutable **auditd**, **retentiond**
 ## Slide 11 — Commercial shape (preview)
 
 - **NRE** for engineering + migration  
-- **Equipment** with clear BOM  
-- **Annual ops** for patch/monitor/on-call
+- **Equipment** with clear BOM — **scoped to reconciled camera census** (**~40** **[DeFlock](https://maps.deflock.org/?lat=39.1670&lng=-86.5343&zoom=11.00)** **stress** vs **11+4+4** **headline** until field verification)  
+- **Unit rates** (per channel / per GPU / per TB-month) so totals flex with the final site list  
+- **Annual ops** for patch/monitor/on-call  
 
-*Official numbers track the published solicitation.*
+*Official numbers track the published solicitation; pricing assumes **capacity for DeFlock-class density** until the City locks quantities.*
 
 ---
 

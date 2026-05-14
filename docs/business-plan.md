@@ -30,7 +30,9 @@ We are anchoring near-term revenue on a **City of Bloomington ALPR ecosystem rep
 
 ## 3. Market context — Bloomington
 
-**Situational facts (public record, April 2026).** The City’s prior license plate reader subscription arrangement with **Flock Safety** ended **2026-03-05**; leadership publicly framed a transition period with tightened access and **no outside data sharing** while evaluating replacements. The installed base described includes **11 fixed ALPR cameras**, **4 fixed video cameras**, and **4 mobile trailer systems** capable of ALPR and video (and other modalities).
+**Situational facts (public record, April 2026).** The City’s prior license plate reader subscription arrangement with **Flock Safety** ended **2026-03-05**; leadership publicly framed a transition period with tightened access and **no outside data sharing** while evaluating replacements. The installed base described in City news includes **11 fixed ALPR cameras**, **4 fixed video cameras**, and **4 mobile trailer systems** capable of ALPR and video (and other modalities).
+
+**Third-party density check (~40 imagers).** The **[DeFlock Bloomington map](https://maps.deflock.org/?lat=39.1670&lng=-86.5343&zoom=11.00)** aggregates community reports of **~40** prior-generation **Flock** camera markers. Treat this as a **planning & budget stress case**, not a warranty of official count, until purchasing and field inventories reconcile the delta.
 
 **Competitive reference.** **Flock** exemplifies the **integrated national SaaS + proprietary camera** pattern MITC replaces with **local servers**, **COTS ONVIF imagers** (specific manufacturer links in the technical volume), and **auditable open-source** middleware.
 
@@ -109,12 +111,12 @@ End-to-end **program delivery** for municipally owned ALPR:
 | Phase | Description | Indicative range |
 |-------|-------------|-------------------|
 | Phase A | Pilot (2–3 sites + lab acceptance) | $[^1] |
-| Phase B | Full fleet cutover (11+4+4 equivalents) | $[^1] |
+| Phase B | Full fleet cutover — **channels per final site list** (headline **~19** “systems” vs **DeFlock** **[~40 markers](https://maps.deflock.org/?lat=39.1670&lng=-86.5343&zoom=11.00)** planning stress until inventory reconciliation) | $[^1] |
 | Phase C | Annual operations (per year) | $[^1] |
 
-[^1]: Final figures require official solicitation documents, insurance/bonding costs, and site-specific civil electrical work.
+[^1]: Final figures require official solicitation documents, insurance/bonding costs, site-specific civil electrical work, and a **reconciled camera census** (City records vs field survey vs crowdsourced maps such as **DeFlock**).
 
-**Cost drivers:** GPU hosts, licensed LTE on trailers if used, storage growth with retention policy, forensic export labor spikes during major cases.
+**Cost drivers:** **Concurrent RTSP channel count** (plan for **~40** until proven otherwise), **GPU hosts**, licensed **LTE** on trailers if used, **storage growth** with retention policy, forensic export labor spikes during major cases, **Flock** removal / pole make-good, and **spares** inventory.
 
 **Margin discipline:** Maintain spare hardware pool for **fail-fast replacement** on critical sites to avoid investigative downtime.
 
@@ -129,6 +131,7 @@ End-to-end **program delivery** for municipally owned ALPR:
 | Procurement protest timelines | Early vendor-neutral design; documented evaluation matrix tied to published criteria |
 | Staff turnover at PD | Train-the-trainer; configuration as code; video runbooks |
 | Evidence challenges | Hashing, time sync to UTC with audit trail, export formats with provenance metadata |
+| Hidden camera count skew | Reconcile CMMS, permits, **field walk-down**, and **[DeFlock](https://maps.deflock.org/?lat=39.1670&lng=-86.5343&zoom=11.00)**-class maps; **unit-rate pricing** until final site register |
 
 ---
 

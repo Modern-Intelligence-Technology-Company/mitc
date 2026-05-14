@@ -9,7 +9,11 @@
 
 ## 1. Purpose and scope
 
-This specification defines a **reference architecture** MITC proposes for replacing and improving Bloomington’s ALPR capabilities using **commodity network and camera hardware** and **open-source-first software** orchestrated on **servers located in Bloomington**. It is written to align with publicly described fleet scale (11 fixed ALPR, 4 fixed video, 4 mobile trailer systems) and governance themes emphasized in City communications (privacy, transparency, accountability, local control).
+This specification defines a **reference architecture** MITC proposes for replacing and improving Bloomington’s ALPR capabilities using **commodity network and camera hardware** and **open-source-first software** orchestrated on **servers located in Bloomington**. It aligns with **governance** themes in City communications (privacy, transparency, accountability, local control), while treating **camera quantities** as a **reconciliation problem** between (a) the **headline public fleet description** and (b) a **higher-density, third-party planning map**.
+
+**Official public footprint (City communications):** **11** fixed ALPR positions, **4** fixed video positions, and **4** mobile trailer systems—often summarized as **~19** “systems,” noting trailers may host **more than one** imager each.
+
+**Third-party planning stress case (~40 channels):** The community-maintained **[DeFlock map (Bloomington-centered)](https://maps.deflock.org/?lat=39.1670&lng=-86.5343&zoom=11.00)** displays on the order of **~40** markers associated with the prior **Flock** deployment in the Bloomington area. DeFlock is **not** a legal inventory; MITC uses it **only** as a **budget and capacity bracket** for **concurrent ingest**, **GPU decode**, **aggregation backhaul**, and **storage** until the City’s **authoritative site list**, **permits**, and **as-built** survey close the gap.
 
 **Out of scope unless separately authorized:** facial recognition analytics, dragnet marketing analytics unrelated to active cases, and participation in proprietary national correlation networks without written policy.
 
@@ -102,6 +106,16 @@ Trailers synchronize to the **central Bloomington** cluster; **no** command/cont
 
 Exact SKU selection happens after **pilot throughput** measurement (reads/sec, camera count, retention).
 
+### 3.4 Budget-linked platform sizing (draft brackets — binding BoM after field verification)
+
+| Planning band | Concurrent ingest endpoints (round numbers) | Typical platform implications |
+|---------------|-----------------------------------------------|-------------------------------|
+| **Band A — headline public tally** | ~15–20 HD-class streams | **§3.3** minimum **HA** inference pair often suffices after pilot tuning |
+| **Band B — DeFlock-informed stress** | ~35–45 streams | Add **decode / GPU headroom** (extra datacenter GPU or additional inference node), **wider 25 GbE** or **100 GbE** spine if aggregating many sites, **higher MinIO RAW** tier and **message-queue** throughput |
+| **Band C — verified as-built** | Per final RFP attachment | **Priced** quantities and SLAs **lock** here |
+
+**Cost shape (qualitative):** **Field hardware** (cameras, mounts, PoE ports) scales **roughly linearly** with **confirmed** positions. **NRE** (integrations, policy-as-code porting, training) is **sub-linear**—a second tranche of cameras does **not** double engineering cost. **Object storage opex** scales **near-linearly** with **retention × frame policy × channel count**. MITC recommends a **10–15%** **hardware and integration contingency** until reconciling DeFlock-style counts with **City purchasing records** and **pole surveys**.
+
 ---
 
 ## 4. Software specification — open-source stack
@@ -111,7 +125,7 @@ Exact SKU selection happens after **pilot throughput** measurement (reads/sec, c
 - **Docker** / **Compose** for pilot; **k3s** or **Kubernetes** for HA production if City IT prefers.  
 - **Prometheus** + **Grafana** for metrics (open source).  
 - **OpenTelemetry** exporters for tracing ingest pipelines.  
-- **Loki** or **Elasticsearch** (open) for_logs **only if** retention matches policy (often shorter than plate retention).
+- **Loki** or **Elasticsearch** (open) for logs **only if** retention matches policy (often shorter than plate retention).
 
 ### 4.2 Video management / ingestion (options)
 
@@ -185,7 +199,7 @@ MITC proposes **capture of a labeled test corpus** under Bloomington supervision
 
 ## 7. Migration from prior vendor footprint
 
-1. **Inventory** existing pole assets, circuits, and network paths.  
+1. **Inventory** existing pole assets, circuits, and network paths—**cross-check** purchasing/CMMS data and field surveys against crowdsourced references such as **[DeFlock](https://maps.deflock.org/?lat=39.1670&lng=-86.5343&zoom=11.00)** (~**40** Bloomington-area markers at planning time) **without** treating the map as evidentiary.  
 2. **Parallel run** (optional) with logically separated storage until acceptance.  
 3. **Policy mapping** translate retention and access rules into **software policy objects**.  
 4. **Training** for analysts and evidence technicians on export/redaction tooling.  
