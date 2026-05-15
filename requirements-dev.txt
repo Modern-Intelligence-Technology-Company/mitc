@@ -1,3 +1,6 @@
 # Development / CI — MITC documentation repo MVP checks
 pytest>=8.0
 PyYAML>=6.0
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+httpx>=0.28.0

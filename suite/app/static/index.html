@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>MITC City ALPR Suite — local dashboard</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; background: #0f1419; color: #e7ecf3; }
+    a { color: #7eb6ff; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #2a3544; padding: 0.45rem 0.6rem; text-align: left; }
+    th { background: #1a2332; }
+    h1 { font-weight: 600; }
+    .badge { display: inline-block; background: #264d32; color: #b9f6c4; padding: 0.15rem 0.45rem; border-radius: 4px; font-size: 0.8rem; }
+    .note { color: #9aa7b8; max-width: 52rem; line-height: 1.45; }
+  </style>
+</head>
+<body>
+  <h1>MITC City ALPR Suite <span class="badge">local custody pilot</span></h1>
+  <p class="note">
+    <strong>Digital twin mode:</strong> in-container RTSP publishers feed <code>twin_cam_XX</code> paths on
+    <code>rtsp://&lt;server&gt;:8554/</code> — matching how an
+    <strong>AXIS Q1805-LE</strong> (or any ONVIF peer) is addressed in <strong>production</strong> once you swap
+    <code>rtsp_url</code> entries in <code>cameras.yaml</code>. Stub reads are deliberately labeled in the API.
+  </p>
+  <h2>Cameras</h2>
+  <div id="cameras">Loading…</div>
+  <h2>Recent reads (stub ALPR)</h2>
+  <div id="reads">Loading…</div>
+  <script>
+    async function load() {
+      const c = await fetch('/api/v1/cameras').then(r => r.json());
+      document.getElementById('cameras').innerHTML = `
+        <p><strong>Reference model:</strong> ${c.reference_camera_model || '—'} · <strong>channels:</strong> ${c.count}</p>
+        <table><thead><tr><th>ID</th><th>Name</th><th>Role</th><th>RTSP URL</th></tr></thead><tbody>
+        ${c.cameras.map(x => `<tr><td>${x.id}</td><td>${x.name}</td><td>${x.role}</td><td style="word-break:break-all">${x.rtsp_url}</td></tr>`).join('')}
+        </tbody></table>`;
+      const r = await fetch('/api/v1/reads?limit=40').then(r => r.json());
+      document.getElementById('reads').innerHTML = r.count === 0 ? '<p>No reads yet (worker may still be ingesting).</p>' : `
+        <table><thead><tr><th>Time</th><th>Camera</th><th>Plate</th><th>Note</th></tr></thead><tbody>
+        ${r.reads.map(x => `<tr><td>${new Date(x.ts*1000).toISOString()}</td><td>${x.camera_id}</td><td>${x.plate_text}</td><td>${x.source_note}</td></tr>`).join('')}
+        </tbody></table>`;
+    }
+    load();
+    setInterval(load, 15000);
+  </script>
+</body>
+</html>

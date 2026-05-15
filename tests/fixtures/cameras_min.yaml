@@ -1,0 +1,10 @@
+reference_camera_model: "AXIS Q1805-LE (integration reference — replace rtsp_url with live pole camera)"
+cameras:
+  - id: twin-001
+    name: "Digital twin 01"
+    rtsp_url: "rtsp://127.0.0.1:8554/twin_cam_01"
+    role: digital_twin
+  - id: twin-002
+    name: "Digital twin 02"
+    rtsp_url: "rtsp://127.0.0.1:8554/twin_cam_02"
+    role: digital_twin

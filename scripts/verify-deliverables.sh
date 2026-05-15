@@ -24,6 +24,8 @@ declare -A MIN_BYTES=(
   ["docs/adr/0001-bloomington-alpr-bid-package-aar.md"]=800
   ["docs/adr/0002-mvp-simulated-ingest-and-budget-model.md"]=800
   ["docs/budget-citywide-install.md"]=2500
+  ["docs/adr/0003-single-image-city-alpr-suite.md"]=800
+  ["suite/README.md"]=1200
   ["LOG.md"]=400
 )
 
@@ -39,6 +41,11 @@ REQUIRED_FILES=(
   "docs/adr/0002-mvp-simulated-ingest-and-budget-model.md"
   "docs/adr/0002-mvp-simulated-ingest-and-budget-model-aar.md"
   "docs/budget-citywide-install.md"
+  "docs/adr/0003-single-image-city-alpr-suite.md"
+  "docs/adr/0003-single-image-city-alpr-suite-aar.md"
+  "suite/Dockerfile"
+  "suite/README.md"
+  "suite/docker-compose.yml"
   "mvp/docker-compose.yml"
   "mvp/README.md"
   "LOG.md"
@@ -99,12 +106,12 @@ done
 # Unit tests (MVP compose + budget calculator) — fast path when deps available.
 if [[ -d tests ]]; then
   if [[ -x .venv/bin/python ]]; then
-    if ! (cd "$ROOT" && PYTHONPATH=. .venv/bin/python -m pytest -q); then
+    if ! (cd "$ROOT" && PYTHONPATH=". suite" .venv/bin/python -m pytest -q); then
       echo "FAIL: pytest (use: python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt)" >&2
       failures=$((failures + 1))
     fi
   elif python3 -c "import pytest" 2>/dev/null; then
-    if ! (cd "$ROOT" && PYTHONPATH=. python3 -m pytest -q); then
+    if ! (cd "$ROOT" && PYTHONPATH=". suite" python3 -m pytest -q); then
       echo "FAIL: pytest" >&2
       failures=$((failures + 1))
     fi
@@ -118,6 +125,10 @@ fi
 if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
   if ! docker compose -f mvp/docker-compose.yml config -q; then
     echo "FAIL: mvp/docker-compose.yml invalid per docker compose config" >&2
+    failures=$((failures + 1))
+  fi
+  if ! (cd suite && docker compose -f docker-compose.yml config -q); then
+    echo "FAIL: suite/docker-compose.yml invalid per docker compose config" >&2
     failures=$((failures + 1))
   fi
 fi

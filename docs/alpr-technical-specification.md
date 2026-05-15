@@ -185,6 +185,8 @@ Municipal programs should not block software progress on **pole access**. The **
 
 **MITC lab MVP (`mvp/`):** a **Docker Compose** stack runs **MediaMTX** (RTSP broker) plus **FFmpeg** (`lavfi` test pattern) publishing **`simulated_axis`**, mimicking a steady **TCP RTSP** camera feed. The **`ingest-smoke`** service runs **`ffprobe`** to prove the stream is decodable—the same probe pattern operators use when commissioning an **AXIS Q1805-LE**. Final integration is **`rtsp://…` URL + credentials** substitution, not a stack rewrite.
 
+**MITC city pilot suite (`suite/`):** a **single OCI image** bundles **MediaMTX**, **in-container digital-twin** RTSP publishers (`MITC_TWIN_COUNT`), **FastAPI** services (**SQLite** reads store, **stub ALPR** labeling, web dashboard), and **supervisord** process supervision. Operators mount **`cameras.yaml`** listing each **RTSP URL** (twin `rtsp://127.0.0.1:8554/twin_cam_XX` or live **AXIS** endpoints)—no rebuild required when swapping simulated feeds for field hardware.
+
 **Illustrative citywide CAPEX** scenarios (channel counts 19 / 30 / 40 / 50, low–mid–high) are modeled in **`mvp/budget/calculator.py`** with narrative in **`docs/budget-citywide-install.md`**.
 
 ---

@@ -1,0 +1,21 @@
+# Convenience wrapper — builds the single-image city suite from the repo root context.
+services:
+  city-alpr-suite:
+    build:
+      context: ..
+      dockerfile: suite/Dockerfile
+    image: mitc/city-alpr-suite:local
+    ports:
+      - "8080:8080"
+      - "8554:8554"
+    environment:
+      MITC_TWIN_COUNT: "8"
+      MITC_ENABLE_WORKER: "1"
+      MITC_INGEST_INTERVAL_SEC: "12"
+    volumes:
+      - mitc_suite_data:/data
+      # Override with your pole list (AXIS RTSP URLs) without rebuilding:
+      # - ../suite/config/cameras.twin.yaml:/app/config/cameras.twin.yaml:ro
+
+volumes:
+  mitc_suite_data:

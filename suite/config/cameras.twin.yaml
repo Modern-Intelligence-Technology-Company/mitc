@@ -1,0 +1,39 @@
+reference_camera_model: "AXIS Q1805-LE — replace rtsp_url with axis-media path when poles go live"
+cameras:
+  - id: twin-01
+    name: "Digital twin 01 (lavfi → MediaMTX)"
+    rtsp_url: "rtsp://127.0.0.1:8554/twin_cam_01"
+    role: digital_twin
+  - id: twin-02
+    name: "Digital twin 02"
+    rtsp_url: "rtsp://127.0.0.1:8554/twin_cam_02"
+    role: digital_twin
+  - id: twin-03
+    name: "Digital twin 03"
+    rtsp_url: "rtsp://127.0.0.1:8554/twin_cam_03"
+    role: digital_twin
+  - id: twin-04
+    name: "Digital twin 04"
+    rtsp_url: "rtsp://127.0.0.1:8554/twin_cam_04"
+    role: digital_twin
+  - id: twin-05
+    name: "Digital twin 05"
+    rtsp_url: "rtsp://127.0.0.1:8554/twin_cam_05"
+    role: digital_twin
+  - id: twin-06
+    name: "Digital twin 06"
+    rtsp_url: "rtsp://127.0.0.1:8554/twin_cam_06"
+    role: digital_twin
+  - id: twin-07
+    name: "Digital twin 07"
+    rtsp_url: "rtsp://127.0.0.1:8554/twin_cam_07"
+    role: digital_twin
+  - id: twin-08
+    name: "Digital twin 08"
+    rtsp_url: "rtsp://127.0.0.1:8554/twin_cam_08"
+    role: digital_twin
+# Example live entry (uncomment & adjust when hardware exists):
+#  - id: pole-NE-184
+#    name: "Live AXIS Q1805-LE — example host"
+#    rtsp_url: "rtsp://USER:PASS@10.40.18.184/axis-media/media.amp?streamprofile=PrimaryVideo"
+#    role: live_axis
